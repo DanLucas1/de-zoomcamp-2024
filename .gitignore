@@ -1,0 +1,11 @@
+# all "private" directories
+private/
+
+# Ignore from week 1:
+
+# volume mounts from week 1 local docker setup
+/week1/data_pgadmin/
+/week1/ny_taxi_postgres_data/
+
+# the CSV used in week 1 setup
+/week1/yellow_tripdata_2021-01.csv
