@@ -1,0 +1,11 @@
+FROM python:3.9.1
+
+RUN apt-get install wget
+RUN pip install numpy pandas requests sqlalchemy psycopg2
+
+WORKDIR /app
+
+COPY ingestion_script.py .
+COPY ingest.sh .
+
+RUN chmod +x ingest.sh

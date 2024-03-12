@@ -15,7 +15,6 @@ def main(params):
     table_name = params.table_name
     url = params.url
 
-
     # download the CSV
     if url.endswith('.csv.gz'):
           csv_name = 'output.csv.gz'
@@ -24,41 +23,24 @@ def main(params):
 
     os.system(f"wget {url} -O {csv_name}")
 
-
-    set_dtypes = {'VendorID': pd.Int64Dtype(),
-                'passenger_count': pd.Int64Dtype(),
-                'trip_distance': 'float64',
-                'RatecodeID': pd.Int64Dtype(),
-                'store_and_fwd_flag': 'object',
-                'PULocationID': pd.Int64Dtype(),
-                'DOLocationID': pd.Int64Dtype(),
-                'payment_type': pd.Int64Dtype(),
-                'fare_amount': 'float64',
-                'extra': 'float64',
-                'mta_tax': 'float64',
-                'tip_amount': 'float64',
-                'tolls_amount': 'float64',
-                'improvement_surcharge': 'float64',
-                'total_amount': 'float64',
-                'congestion_surcharge': 'float64'}
-    
-
     # connect to postgres: [type of db]  user:pass@hostname :port/db_name
     # engine = create_engine('postgresql://root:root@localhost:5432/ny_taxi')
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
+    # find date and time columns to use as parse_dates argument in full CSV read
+    csv_headers = pd.read_csv(csv_name, nrows=0).columns
+    date_substr = ["date", "time"]
+    datetime_cols = [col for col in csv_headers if any(sub in col for sub in date_substr)]
 
+    # create iterator to read CSV
     df_iter = pd.read_csv(csv_name,
-                    dtype=set_dtypes,
-                    parse_dates = ['tpep_pickup_datetime', 'tpep_dropoff_datetime'],
-                    iterator=True,
-                    chunksize=50000)
+                          parse_dates = datetime_cols,
+                          iterator=True,
+                          chunksize=50000)
 
-    # add table header
+    # add table header - covered in replace/append logic below
     # df = next(df_iter)
     # df.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
-
-
 
     batchnum = 1
     exists = 'replace'
@@ -68,20 +50,18 @@ def main(params):
             start = time()
             df = next(df_iter)
             rows = df.shape[0]
-            df.to_sql(name='yellow_taxi_data', con=engine, if_exists=exists)
+            df.to_sql(name=table_name, con=engine, if_exists=exists)
             duration = time() - start
             print(f'inserted batch {batchnum}, {rows} rows: {duration:.2f} seconds')
             exists = 'append'
             batchnum += 1
         except StopIteration:
             print(f'All batches processed. Total batches: {batchnum}')
-            break  # Exit the loop when there are no more items in the iterator
+            break  # exit the loop when there are no more items in the iterator
         except Exception as e:
-            traceback_str = traceback.format_exc()  # This captures the traceback as a string
+            traceback_str = traceback.format_exc()  # capture the traceback as a string
             print(f'Error in batch {batchnum}: {e}\nTraceback:\n{traceback_str}')
-            break  # Optionally break out of the loop to prevent the kernel from crashing
-
-
+            break  # break out of the loop to prevent the kernel from crashing
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Ingest CSV data to postgres db")

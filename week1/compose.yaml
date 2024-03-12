@@ -20,3 +20,9 @@ services:
       - "./data_pgadmin:/var/lib/pgadmin"
     ports:
       - "8080:80"
+
+  ingestion:
+    depends_on:
+      - pgdatabase
+    build: .
+    command: bash ./ingest.sh
