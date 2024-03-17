@@ -1,6 +1,9 @@
 # all "private" directories
 private/
 
+# all "keys" directories
+keys/
+
 # Ignore from week 1:
 
 # volume mounts from week 1 local docker setup
@@ -9,3 +12,8 @@ private/
 
 # the CSV used in week 1 setup
 /week1/yellow_tripdata_2021-01.csv
+
+/week1/terraform.tfstate
+/week1/terraform.tfstate.backup
+/week1/.terraform.lock.hcl
+/week1/.terraform/
