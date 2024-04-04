@@ -4,6 +4,9 @@ private/
 # all "keys" directories
 keys/
 
+# all .env files
+**/.env
+
 # Ignore from week 1:
 
 # volume mounts from week 1 local docker setup
@@ -17,3 +20,10 @@ keys/
 /week1/terraform.tfstate.backup
 /week1/.terraform.lock.hcl
 /week1/.terraform/
+
+
+# Ignore from weeks 2/3
+/week2/mage-zoomcamp/README.md
+/week2/mage-zoomcamp/requirements.txt
+/week2/mage-zoomcamp/service_acct_creds.json
+/week2/mage_data/
