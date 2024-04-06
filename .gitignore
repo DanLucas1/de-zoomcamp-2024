@@ -16,24 +16,20 @@ keys/
 # the CSV used in week 1 setup
 /week1/yellow_tripdata_2021-01.csv
 
-/week1/terraform.tfstate
-/week1/terraform.tfstate.backup
-/week1/.terraform.lock.hcl
-/week1/.terraform/
+# terraform states and lock files
+terraform.tfstate
+terraform.tfstate.backup
+terraform.lock.hcl
+.terraform/
 
 
 # Ignore from weeks 2/3
-/week2/mage-zoomcamp/README.md
-/week2/mage-zoomcamp/requirements.txt
-/week2/mage-zoomcamp/service_acct_creds.json
-/week2/mage_data/
+mage-zoomcamp/README.md
+mage-zoomcamp/requirements.txt
+service_acct_creds.json
+mage_data/
+
 
 # Ignore from week 4
-/week4/mage-zoomcamp/README.md
-/week4/mage-zoomcamp/requirements.txt
-/week4/mage-zoomcamp/service_acct_creds.json
-/week4/mage-data
-/week4/terraform.tfstate
-/week4/terraform.tfstate.backup
-/week4/.terraform.lock.hcl
-/week4/.terraform/
+# terraform and keys - ignored from week 1
+# mage - not set up yet, ignored from week 2/3
