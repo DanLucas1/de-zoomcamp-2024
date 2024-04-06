@@ -27,3 +27,13 @@ keys/
 /week2/mage-zoomcamp/requirements.txt
 /week2/mage-zoomcamp/service_acct_creds.json
 /week2/mage_data/
+
+# Ignore from week 4
+/week4/mage-zoomcamp/README.md
+/week4/mage-zoomcamp/requirements.txt
+/week4/mage-zoomcamp/service_acct_creds.json
+/week4/mage-data
+/week4/terraform.tfstate
+/week4/terraform.tfstate.backup
+/week4/.terraform.lock.hcl
+/week4/.terraform/
