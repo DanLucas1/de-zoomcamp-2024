@@ -19,13 +19,13 @@ keys/
 # terraform states and lock files
 terraform.tfstate
 terraform.tfstate.backup
-terraform.lock.hcl
+.terraform.lock.hcl
 .terraform/
 
 
 # Ignore from weeks 2/3
-mage-zoomcamp/README.md
-mage-zoomcamp/requirements.txt
+*/mage-zoomcamp/README.md
+requirements.txt
 service_acct_creds.json
 mage_data/
 
