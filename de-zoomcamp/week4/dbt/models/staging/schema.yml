@@ -1,0 +1,12 @@
+# schema.yml
+
+version: 2
+
+sources:
+  - name: staging
+    database: de-zoomcamp-413811
+    schema: ny_taxi_dataset
+
+    tables:
+      - name: green_trips
+      - name: yellow_trips
