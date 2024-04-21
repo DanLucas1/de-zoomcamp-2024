@@ -1,3 +1,6 @@
+# any notes files
+notes.md
+
 # all "private" directories
 private/
 
@@ -27,9 +30,11 @@ terraform.tfstate.backup
 */mage-zoomcamp/README.md
 requirements.txt
 service_acct_creds.json
-mage_data/
+**/mage_data/
 
 
 # Ignore from week 4
 # terraform and keys - ignored from week 1
 # mage - not set up yet, ignored from week 2/3
+web_to_gcs.py
+**/__pycache__/
