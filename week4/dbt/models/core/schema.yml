@@ -1,123 +1,86 @@
-# schema.yml
-
 version: 2
 
-sources:
-  - name: staging
-    database: de-zoomcamp-413811
-    schema: ny_taxi_dataset
-
-    tables:
-      - name: green_trips
-      - name: yellow_trips
-
 models:
-  - name: stg_green_trips
+  - name: dim_zones
+    description: ""
+
+    columns:
+      - name: location_id
+        data_type: int64
+        description: ""
+
+      - name: borough
+        data_type: string
+        description: ""
+
+      - name: zone
+        data_type: string
+        description: ""
+
+      - name: service_zone
+        data_type: string
+        description: ""
+
+  - name: dm_monthly_zone_revenue
     description: ""
     columns:
-      - name: trip_id
-        data_type: string
-        description: ""
-        tests:
-          - unique
-          - not_null
-
-      - name: vendor_id
-        data_type: int64
-        description: ""
-
-      - name: ratecode_id
-        data_type: int64
-        description: ""
-
-      - name: pickup_location_id
-        data_type: int64
-        description: ""
-        tests:
-          - relationships:
-              field: location_id
-              to: ref('zone_lookup')
-              severity: warn
-
-      - name: dropoff_location_id
-        data_type: int64
-        description: ""
-        tests:
-          - relationships:
-              field: location_id
-              to: ref('zone_lookup')
-              severity: warn
-
-      - name: pickup_datetime
-        data_type: timestamp
-        description: ""
-
-      - name: dropoff_datetime
-        data_type: timestamp
-        description: ""
-
-      - name: store_and_fwd_flag
-        data_type: int64
-        description: ""
-
-      - name: passenger_count
-        data_type: int64
-        description: ""
-
-      - name: trip_distance
-        data_type: numeric
-        description: ""
-
-      - name: trip_type
-        data_type: int64
-        description: ""
-
-      - name: fare_amount
-        data_type: numeric
-        description: ""
-
-      - name: extra
-        data_type: numeric
-        description: ""
-
-      - name: mta_tax
-        data_type: numeric
-        description: ""
-
-      - name: tip_amount
-        data_type: numeric
-        description: ""
-
-      - name: tolls_amount
-        data_type: numeric
-        description: ""
-
-      - name: ehail_fee
-        data_type: numeric
-        description: ""
-
-      - name: improvement_surcharge
-        data_type: numeric
-        description: ""
-
-      - name: total_amount
-        data_type: numeric
-        description: ""
-
-      - name: payment_type
-        data_type: int64
-        description: ""
-        tests:
-          - accepted_values:
-              values: "{{ var('payment_type_values') }}"
-              severity: warn
-              quote: false
-
-      - name: payment_type_description
+      - name: revenue_zone
         data_type: string
         description: ""
 
-  - name: stg_yellow_trips
+      - name: revenue_month
+        data_type: timestamp
+        description: ""
+
+      - name: taxi_type
+        data_type: string
+        description: ""
+
+      - name: revenue_monthly_fare
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_extra
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_mta_tax
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_tip_amount
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_tolls_amount
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_ehail_fee
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_improvement_surcharge
+        data_type: numeric
+        description: ""
+
+      - name: revenue_monthly_total_amount
+        data_type: numeric
+        description: ""
+
+      - name: total_monthly_trips
+        data_type: int64
+        description: ""
+
+      - name: avg_monthly_passenger_count
+        data_type: float64
+        description: ""
+
+      - name: avg_monthly_trip_distance
+        data_type: numeric
+        description: ""
+
+  - name: fact_trips
     description: ""
     columns:
       - name: trip_id
@@ -128,6 +91,10 @@ models:
         data_type: int64
         description: ""
 
+      - name: taxi_type
+        data_type: string
+        description: ""
+
       - name: ratecode_id
         data_type: int64
         description: ""
@@ -136,8 +103,24 @@ models:
         data_type: int64
         description: ""
 
+      - name: pickup_borough
+        data_type: string
+        description: ""
+
+      - name: pickup_zone
+        data_type: string
+        description: ""
+
       - name: dropoff_location_id
         data_type: int64
+        description: ""
+
+      - name: dropoff_borough
+        data_type: string
+        description: ""
+
+      - name: dropoff_zone
+        data_type: string
         description: ""
 
       - name: pickup_datetime
